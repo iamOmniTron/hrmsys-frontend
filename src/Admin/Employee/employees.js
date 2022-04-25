@@ -25,7 +25,7 @@ export default function Employees(){
 
     const fetchEmployees = async ()=>{
         
-      const {data:response} = await axios.get(`${SERVER_URL}/employee/all`,{
+      const {data:response} = await axios.get(`${SERVER_URL}/employees/all`,{
         headers:{
           "Authorization":`Bearer ${token}`
         }
@@ -52,7 +52,6 @@ export default function Employees(){
       return setIsLoading(false);
 
     }
-    console.log("here")
     fetchEmployees();
   },[token]);
     return(

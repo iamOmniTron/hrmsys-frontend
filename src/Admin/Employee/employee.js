@@ -1,15 +1,82 @@
 import {Flex,Box,FormLabel,FormControl,Input,Button,Heading,HStack,Select,Stack, Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton,useDisclosure} from "@chakra-ui/react";
+    ModalCloseButton,useDisclosure,useToast} from "@chakra-ui/react";
 import {MdDelete,MdSave} from "react-icons/md";
+import {useState,useEffect,useContext} from "react";
+import AuthContext from "../../contexts/auth";
+import Loader from "../../Components/loader";
+import AdminContext from "../../contexts/admin";
+import axios from "axios";
+import { useParams,useNavigate } from "react-router-dom";
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function Employee(){
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [token] = useContext(AuthContext);
+    const [isAdmin] = useContext(AdminContext);
+    const [employee,setEmployee] = useState({});
+    const [isLoading,setIsLoading] = useState(false); 
+    const navigate = useNavigate();
+    const toast = useToast();
+    const {id} = useParams();
+
+    const checkIsLoggedIn = (token)=>{
+      if(!token || token.length < 1){
+        return navigate("/admin/login")
+      }
+      return;
+    }
+
+    const checkIsAdmin = (isAdmin)=>{
+        if(!isAdmin){
+          return navigate("/admin/login");
+        }
+        return;
+      }
+
+
+    const fetchEmployee = async ()=>{
+      const {data:response} = await axios.get(`${SERVER_URL}/employee/${id}`,{
+        headers:{
+          "Authorization":`Bearer ${token}`
+        }
+      });
+      if(!response || typeof response.error == "string"){
+        toast({
+          title:response.error ? response.error :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return setIsLoading(false);
+      }
+      if(!response.success){
+        toast({
+          title:response.message ? response.message :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return setIsLoading(false);
+      }
+      if(response.success){
+        console.log(response.data);
+        setEmployee(response.data);
+      }
+      return setIsLoading(false);
+    }
+
+    useEffect(()=>{
+      checkIsLoggedIn(token);
+      checkIsAdmin(isAdmin);
+    
+      fetchEmployee();
+
+    },[token]);
+
     return(
+      isLoading? <Loader/> :
         <>
         <PopUp isOpen={isOpen} onClose={onClose}/>
         <Flex direction="column"  minHeight="100vh">

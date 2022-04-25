@@ -3,6 +3,8 @@ import LoginAdmin from "./Admin/LoginAdmin";
 import Dashboard from './Admin/dashboard';
 import Employees from "./Admin/Employee/employees";
 import Employee from "./Admin/Employee/employee";
+import Roles from "./Admin/Role/roles";
+import Role from "./Admin/Role/role";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import AuthContext from "./contexts/auth";
 import AdminContext from "./contexts/admin";
@@ -21,6 +23,8 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard/>}>
               <Route path="employees" index element={<Employees/>}/>
               <Route path="employee/:id" element={<Employee/>}/>
+              <Route path="roles" element={<Roles/>}/>
+              <Route path="role/:id" element={<Role/>}/>
             </Route>
         </Routes>
       </Router>

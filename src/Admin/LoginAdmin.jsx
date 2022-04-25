@@ -67,6 +67,7 @@ export default function LoginAdmin (){
 
 
   useEffect(()=>{
+    console.log(token)
     const check = ()=>{
       if(token && token.length >1){
        return navigate("/admin/dashboard");
@@ -119,7 +120,7 @@ export default function LoginAdmin (){
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }} type="submit">
+                }} type="submit" isLoading={isLoading}>
                 Sign in
               </Button>
             </Stack>

@@ -1,4 +1,4 @@
-import {Link as ReachLink,Outlet} from "react-router-dom";
+import {Link as ReachLink,Outlet,useNavigate} from "react-router-dom";
 import {
   IconButton,
   Avatar,
@@ -32,6 +32,9 @@ import {MdPayments} from "react-icons/md";
 import {VscSignIn} from "react-icons/vsc";
 import {GiSkills} from "react-icons/gi";
 import {AiOutlineDashboard} from "react-icons/ai";
+import AuthContext from "../contexts/auth";
+import AdminContext from "../contexts/admin";
+import {useEffect,useContext} from "react";
 
 const LinkItems = [
   { name : "Dashboard", icon:AiOutlineDashboard,link:""},
@@ -45,6 +48,22 @@ const LinkItems = [
 
 export default function Dashboard({children}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [_,setIsAdmin] = useContext(AdminContext);
+  const [token,setToken] = useContext(AuthContext);
+  const navigate = useNavigate();
+
+ 
+
+  useEffect(()=>{
+    console.log(token)
+    const check = ()=>{
+      if(!token || token.length < 1){
+        return navigate("/admin/login");
+      }
+      return;
+    }
+    check();
+  },[token])
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
@@ -63,7 +82,7 @@ export default function Dashboard({children}) {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} setIsAdmin={setIsAdmin} setToken={setToken}/>
       <Box ml={{ base: 0, md: 60 }} p="4">
         <Outlet/>
       </Box>
@@ -127,7 +146,11 @@ const NavItem = ({ icon,link, children, ...rest }) => {
   );
 };
 
-const MobileNav = ({ onOpen, ...rest }) => {
+const MobileNav = ({ onOpen,setToken,setIsAdmin}) => {
+  // const handleLogout = (e)=>{
+  //   setToken("");
+  //   setIsAdmin("");
+  // }
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -138,7 +161,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent={{ base: 'space-between', md: 'flex-end' }}
-      {...rest}>
+        >
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
@@ -190,9 +213,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
             </MenuList>

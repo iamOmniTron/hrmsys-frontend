@@ -17,38 +17,38 @@ export default function Row({prop}){
     const handleDelete = async(e)=>{
         try{
             setIsLoading(true);
-            const {data:response} = await axios.delete(`${SERVER_URL}/profession/${prop.id}`,{
+            const {data:response} = await axios.delete(`${SERVER_URL}/skill/${prop.id}`,{
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
             });
             if(!response || typeof response.error == "string"){
+                setIsLoading(false);
                 toast({
                     title:response.error? response.error: "something went wrong",
                     status:"error",
                     isClosable:true
                 })
-                setIsLoading(false);
                 return;
             }
             if(!response.status){
+                
+                setIsLoading(false);
                 toast({
                     title:response.message? response.message:"something went wrong",
                     status:"error",
                     isClosable:true
                 })
-                setIsLoading(false);
                 return;
             }
             if(response.success){
+            setIsLoading(false);
                 toast({
                     title:response.message,
                     status:"success",
                     isClosable:true
                 })
             }
-
-            setIsLoading(false);
             return;
 
 
@@ -63,17 +63,16 @@ export default function Row({prop}){
     }
 
     const handleEdit = (e)=>{
-        return navigate(`/admin/dashboard/role/${prop.id}`);
+        return navigate(`/admin/dashboard/skill/${prop.id}`);
     }
     return(
         <>
         <Tr>
             <Td>{prop.name}</Td>
-            <Td>{prop.salary}</Td>
             <Td> 
             <HStack> 
-                <Button leftIcon={<BiEdit/>} colorScheme="facebook" onClick={handleEdit}>Edit</Button>
-                <Button leftIcon={<MdDelete/>} isLoading={isLoading} colorScheme='red' onClick={handleDelete}>Delete</Button>
+                <Button leftIcon={<BiEdit/>} size="sm" colorScheme="facebook" onClick={handleEdit}>Edit</Button>
+                <Button leftIcon={<MdDelete/>} size="sm" isLoading={isLoading} colorScheme='red' onClick={handleDelete}>Delete</Button>
             </HStack>
             </Td>
         </Tr>

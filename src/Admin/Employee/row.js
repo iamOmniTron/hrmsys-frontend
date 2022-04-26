@@ -1,4 +1,4 @@
-import {Link,useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Tr,Td,HStack,Button,useToast} from "@chakra-ui/react";
 import {BiEdit} from "react-icons/bi";
 import {MdDelete} from "react-icons/md";
@@ -63,7 +63,7 @@ export default function Row({prop}){
     }
 
     const handleEdit = (e)=>{
-        return navigate(`/employee/${prop.id}`);
+        return navigate(`/admin/dashboard/employee/${prop.id}`);
     }
     return(
         <>

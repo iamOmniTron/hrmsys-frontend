@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {useState,useEffect,useContext} from "react";
 import {Flex,Box,FormLabel,FormControl,Input,Button,Heading,HStack,Select,Stack, Modal,
     ModalOverlay,
@@ -8,58 +8,56 @@ import {Flex,Box,FormLabel,FormControl,Input,Button,Heading,HStack,Select,Stack,
     ModalCloseButton,useDisclosure,useToast} from "@chakra-ui/react";
 import {MdDelete,MdSave} from "react-icons/md";
 import AuthContext from "../../contexts/auth";
-import Loader from "../../Components/loader";
 import AdminContext from "../../contexts/admin";
 import axios from "axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-export default function Role(){
-    const {id} = useParams();
+export default function AddRole(){
     const toast = useToast();
+    const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [token] = useContext(AuthContext);
     const [isLoading,setIsLoading] = useState(false);
     const [salary,setSalary] = useState("");
     const [name,setName] = useState("");
     const [isAdmin] = useContext(AdminContext);
-    const [role,setRole] = useState({});
     const [salaries,setSalaries] = useState([]);
+
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        setIsLoading(true);
+        const {data:response} = await axios.post(`${SERVER_URL}/profession/`,{
+          name,salaryId:salary
+        },{
+            headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        });
+        if(!response || typeof response.error == "string"){
+            toast({
+              title:response.error ? response.error :"network error",
+              status:"error",
+              isClosable:true
+            })
+            return setIsLoading(false);
+          }
+          if(!response.success){
+            toast({
+              title:response.message ? response.message :"network error",
+              status:"error",
+              isClosable:true
+            })
+            return setIsLoading(false);
+          }
+          if(response.success){
+            setIsLoading(false);
+            return navigate("/admin/dashboard/roles");
+          }
+    }
 
 
     useEffect(()=>{
-        console.log("here at role")
-        const fetchRole = async ()=>{
-            setIsLoading(true);
-            const {data:response} = await axios.get(`${SERVER_URL}/profession/${id}`,{
-                headers:{
-                    "Authorization":`Bearer ${token}`
-                }
-            });
-            if(!response || typeof response.error == "string"){
-              setIsLoading(false);
-                toast({
-                  title:response.error ? response.error :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return ;
-              }
-              if(!response.success){
-                setIsLoading(false);
-                toast({
-                  title:response.message ? response.message :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return ;
-              }
-              if(response.success){
-                setIsLoading(false);
-                setRole(...response.data);
-              }
-              return;
-        }
     
         const fetchSalaries = async ()=>{
             setIsLoading(true);
@@ -69,46 +67,41 @@ export default function Role(){
                 }
             });
             if(!response || typeof response.error == "string"){
-              setIsLoading(false);
                 toast({
                   title:response.error ? response.error :"network error",
                   status:"error",
                   isClosable:true
                 })
-                return;
+                return setIsLoading(false);
               }
               if(!response.success){
-                setIsLoading(false);
                 toast({
                   title:response.message ? response.message :"network error",
                   status:"error",
                   isClosable:true
                 })
-                return;
+                return setIsLoading(false);
               }
               if(response.success){
-                setIsLoading(false);
-                setSalaries(...response.data);
+                setSalaries(response.data);
               }
-              return;
+              return setIsLoading(false);
         }
  
         // checkIsLoggedIn(token);
         // checkIsAdmin(isAdmin);
-        fetchRole();
         fetchSalaries();
-    },[token,id]);
+    },[token]);
 
 
 
     return(
-        isLoading ? <Loader/> :
         <>
          <PopUp isOpen={isOpen} onClose={onClose}/>
         <Flex direction="column"  minHeight="100vh">
         <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6}>
         <Flex align="start">
-          <Heading size="md">Edit Role Details</Heading>
+          <Heading size="md">Add New Role</Heading>
         </Flex>
         <Box my={4} textAlign="left">
           <form>
@@ -127,7 +120,7 @@ export default function Role(){
                 </Select>
             </FormControl>
             <HStack alignItems="end" spacing={5}>
-            <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>}>
+            <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>} isLoading={isLoading} onClick={handleSubmit}>
               Save
             </Button>
             <Button type="button" size="md" mt={4} colorScheme="red" leftIcon={<MdDelete/>} onClick={onOpen}>

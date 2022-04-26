@@ -10,6 +10,7 @@ import {useEffect,useState,useContext} from
 "react";
 import Loader from "../../Components/loader";
 import Row from "./row";
+import NoRecord from "../../Components/norecord";
 import AuthContext from "../../contexts/auth";
 import axios from "axios";
 
@@ -81,9 +82,11 @@ export default function Employees(){
     </Thead>
     <Tbody>
       {
-        employees.length >0 && employees.map((employee,index)=>{
-          <Row key={index} prop={employee}/>
+        employees.length >0 ? employees.map((employee,index)=>{
+         return (<Row key={index} prop={employee}/>);
         })
+        :
+        <NoRecord/>
       }
     </Tbody>
   </Table>

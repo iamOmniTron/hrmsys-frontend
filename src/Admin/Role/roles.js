@@ -9,6 +9,7 @@ import {MdAdd} from "react-icons/md";
 import {useEffect,useState,useContext} from
 "react";
 import Loader from "../../Components/loader";
+import NoRecord from "../../Components/norecord";
 import Row from "./row";
 import AuthContext from "../../contexts/auth";
 import axios from "axios";
@@ -45,9 +46,8 @@ export default function Roles(){
               })
               return setIsLoading(false);
             }
-            if(response.success){
               setRoles([...response.data]);
-            }
+            
             return setIsLoading(false);
       
           }
@@ -78,9 +78,11 @@ export default function Roles(){
    </Thead>
    <Tbody>
      {
-       roles.length >0 && roles.map((role,index)=>{
-         <Row key={index} prop={role}/>
+       roles.length >0 ? roles.map((role,index)=>{
+        return(<Row key={index} prop={role}/>);
        })
+       :
+       <NoRecord/>
      }
    </Tbody>
  </Table>

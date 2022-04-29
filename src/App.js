@@ -1,3 +1,4 @@
+import "./App.css";
 import { ChakraProvider } from '@chakra-ui/react'
 import LoginAdmin from "./Admin/LoginAdmin";
 import Dashboard from './Admin/dashboard';
@@ -10,6 +11,7 @@ import AddRole from "./Admin/Role/add";
 import AddSkill from "./Admin/Skill/add";
 import Skills from "./Admin/Skill/skills";
 import Skill from "./Admin/Skill/skill";
+import LoginUser from "./User/auth/LoginUser";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import AuthContext from "./contexts/auth";
 import AdminContext from "./contexts/admin";
@@ -24,6 +26,7 @@ function App() {
         <AdminContext.Provider value={[isAdmin,setIsAdmin]}>
       <Router>
         <Routes>
+            <Route path="/login" element={<LoginUser/>}/>
             <Route path="/admin/login" element={<LoginAdmin/>}/>
             <Route path="/admin/dashboard" element={<Dashboard/>}>
               <Route path="employees" index element={<Employees/>}/>

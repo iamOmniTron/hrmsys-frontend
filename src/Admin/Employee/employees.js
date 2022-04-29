@@ -8,6 +8,7 @@ import {Flex,Button,Box,Spacer,Heading,Table,
 import {MdAdd} from "react-icons/md";
 import {useEffect,useState,useContext} from
 "react";
+import {useNavigate} from "react-router-dom";
 import Loader from "../../Components/loader";
 import Row from "./row";
 import NoRecord from "../../Components/norecord";
@@ -17,10 +18,15 @@ import axios from "axios";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function Employees(){
+  const navigate = useNavigate();
   const [employees,setEmployees] = useState([]);
   const [isLoading,setIsLoading] = useState(true);
   const [token,_] = useContext(AuthContext);
   const toast = useToast();
+
+  const redirect = (e)=>{
+    navigate("/admin/dashboard/employee/add");
+  }
 
   useEffect(()=>{
 
@@ -66,7 +72,7 @@ export default function Employees(){
                 </Box>
                 <Spacer/>
                 <Box>
-                    <Button leftIcon={<MdAdd/>} colorScheme='blue'>Add</Button>
+                    <Button leftIcon={<MdAdd/>} colorScheme='blue' onClick={redirect}>Add</Button>
                 </Box>
             </Flex>
             <TableContainer overflowX="auto">

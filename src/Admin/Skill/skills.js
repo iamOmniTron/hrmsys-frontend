@@ -5,6 +5,7 @@ import {Flex,Button,Box,Spacer,Heading,Table,
   Tr,
   Th,
   TableContainer,useToast} from "@chakra-ui/react";
+import {useNavigate} from "react-router-dom";
 import {MdAdd} from "react-icons/md";
 import Loader from "../../Components/loader";
 import NoRecord from "../../Components/norecord";
@@ -19,6 +20,11 @@ export default function Skills(){
     const [skills,setSkills] = useState([]);
     const [isLoading,setIsLoading] = useState(false);
     const toast = useToast();
+    const navigate = useNavigate();
+
+    const redirect = (e)=>{
+      navigate("/admin/dashboard/skill/add");
+    }
 
 
     useEffect(()=>{
@@ -30,9 +36,8 @@ export default function Skills(){
                 }
             });
             
-      if(!response || typeof response.error == "string"){
+      if(!response || typeof response.error === "string"){
         setIsLoading(false)
-        console.log("1");
         toast({
           title:response.error ? response.error :"network error",
           status:"error",
@@ -41,9 +46,8 @@ export default function Skills(){
          
         return;
       }
-      if(response.success == false){
-        setIsLoading(false)
-        console.log("2")
+      if(response.success === false){
+        setIsLoading(false);
         toast({
           title:response.message ? response.message :"network error",
           status:"error",
@@ -70,7 +74,7 @@ export default function Skills(){
                 </Box>
                 <Spacer/>
                 <Box>
-                    <Button leftIcon={<MdAdd/>} colorScheme='blue'>Add</Button>
+                    <Button leftIcon={<MdAdd/>} colorScheme='blue' onClick={redirect}>Add</Button>
                 </Box>
             </Flex>
             <TableContainer overflowX="auto">

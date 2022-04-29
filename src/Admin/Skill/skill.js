@@ -94,7 +94,7 @@ export default function Skill(){
     return (
         isLoading ? <Loader/> :
         <>
-         <PopUp isOpen={isOpen} onClose={onClose}/>
+         <PopUp isOpen={isOpen} onClose={onClose} id={id} token={token} toast={toast}/>
         <Flex direction="column"  minHeight="100vh">
         <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6}>
         <Flex align="start">
@@ -122,7 +122,41 @@ export default function Skill(){
     )
 }
 
-function PopUp({isOpen,onClose}) {
+function PopUp({isOpen,onClose,id,token,toast}) {
+  const [isLoading,setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDelete = async(e)=>{
+    setIsLoading(true);
+    const {data:response} = await axios.delete(`${SERVER_URL}/skill/${id}`,{
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
+    })
+    if(!response || typeof response.error == "string"){
+      setIsLoading(false);
+        toast({
+          title:response.error ? response.error :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return;
+      }
+      if(!response.success){
+        setIsLoading(false);
+        toast({
+          title:response.message ? response.message :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return;
+      }
+      if(response.success){
+        setIsLoading(false);
+      return navigate("/admin/dashboard/skills");
+      }
+
+  }
   
   return (
     <>
@@ -134,7 +168,10 @@ function PopUp({isOpen,onClose}) {
               Are You Sure You Want To Discard Changes?
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme='blue' mr={3} onClick={(e)=>{
+              onClose();
+              handleDelete();
+              }} isLoading={isLoading}>
               Close
             </Button>
           </ModalFooter>

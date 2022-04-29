@@ -9,7 +9,6 @@ import {
     Link,
     Button,
     Heading,
-    Text,
     useColorModeValue,
   } from '@chakra-ui/react';
   // import {GrUserAdmin} from "react-icons/gr";

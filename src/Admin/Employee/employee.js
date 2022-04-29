@@ -10,7 +10,7 @@ import AuthContext from "../../contexts/auth";
 import Loader from "../../Components/loader";
 // import AdminContext from "../../contexts/admin";
 import axios from "axios";
-import { useParams} from "react-router-dom";
+import { useParams,useNavigate} from "react-router-dom";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function Employee(){
@@ -20,7 +20,6 @@ export default function Employee(){
     const [employee,setEmployee] = useState({});
     const [isLoading,setIsLoading] = useState(false); 
     const {id} = useParams();
-    // const navigate = useNavigate();
      const toast = useToast();
     // const checkIsLoggedIn = (token)=>{
     //   if(!token || token.length < 1){
@@ -65,7 +64,6 @@ export default function Employee(){
         }
         if(response.success){
           setIsLoading(false)
-          console.log(response.data);
           setEmployee(response.data);
         }
         return ;
@@ -78,7 +76,7 @@ export default function Employee(){
     return(
       isLoading? <Loader/> :
         <>
-        <PopUp isOpen={isOpen} onClose={onClose}/>
+        <PopUp isOpen={isOpen} onClose={onClose} id={id} token={token} toast={toast}/>
         <Flex direction="column"  minHeight="100vh">
         <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6}>
         <Flex align="start">
@@ -132,7 +130,40 @@ export default function Employee(){
     )
 }
 
-function PopUp({isOpen,onClose}) {
+function PopUp({isOpen,onClose,id,token,toast}) {
+  const navigate = useNavigate()
+  const [isLoading,setIsLoading] = useState(false);
+  const handleDelete = async(e)=>{
+    setIsLoading(true);
+    const {data:response} = await axios.delete(`${SERVER_URL}/employee/${id}`,{
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
+    })
+    if(!response || typeof response.error == "string"){
+      setIsLoading(false);
+        toast({
+          title:response.error ? response.error :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return;
+      }
+      if(!response.success){
+        setIsLoading(false);
+        toast({
+          title:response.message ? response.message :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return;
+      }
+      if(response.success){
+        setIsLoading(false);
+      return navigate("/admin/dashboard/employees");
+      }
+
+  }
   
     return (
       <>
@@ -144,7 +175,10 @@ function PopUp({isOpen,onClose}) {
                 Are You Sure You Want To Discard Changes?
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={onClose}>
+              <Button colorScheme='blue' mr={3} onClick={()=>{
+                onClose();
+                handleDelete();
+                }} isLoading={isLoading}>
                 Close
               </Button>
             </ModalFooter>

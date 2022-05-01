@@ -37,9 +37,9 @@ import AdminContext from "../contexts/admin";
 import {useEffect,useContext} from "react";
 
 const LinkItems = [
-  { name : "Dashboard", icon:AiOutlineDashboard,link:""},
+  { name : "Dashboard", icon:AiOutlineDashboard,link:"employees"},
   { name: 'Employees', icon: ImUsers,link:"employees" },
-  { name:"Roles", icon: BsTools, link:"roles"},
+  { name:"Levels", icon: BsTools, link:"roles"},
   { name: 'Training', icon: FaHandshake ,link:"training"},
   { name: 'Skills', icon: GiSkills ,link:"skills"},
   { name: 'Payroll', icon: MdPayments ,link:"payroll"},
@@ -55,7 +55,6 @@ export default function Dashboard({children}) {
  
 
   useEffect(()=>{
-    console.log(token)
     const check = ()=>{
       if(!token || token.length < 1){
         return navigate("/admin/login");

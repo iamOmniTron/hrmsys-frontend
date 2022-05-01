@@ -16,24 +16,46 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 export default function Employee(){
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [token] = useContext(AuthContext);
-    // const [isAdmin] = useContext(AdminContext);
     const [employee,setEmployee] = useState({});
     const [isLoading,setIsLoading] = useState(false); 
     const {id} = useParams();
-     const toast = useToast();
-    // const checkIsLoggedIn = (token)=>{
-    //   if(!token || token.length < 1){
-    //     return navigate("/admin/login")
-    //   }
-    //   return;
-    // }
+    const toast = useToast();
+    const navigate = useNavigate();
 
-    // const checkIsAdmin = (isAdmin)=>{
-    //     if(!isAdmin){
-    //       return navigate("/admin/login");
-    //     }
-    //     return;
-    //   }
+    const handleSubmit = async (e)=>{
+      e.preventDefault();
+      setIsLoading(true);
+      const formData = new FormData(e.target);
+      const {data:response} = await axios.post(`${SERVER_URL}/employee/${id}`,formData,{
+        headers:{
+          "Authorization":`Bearer ${token}`,
+          "content-type":"multipart/formdata"
+        }
+      });
+      if(!response || typeof response.error == "string"){
+        setIsLoading(false)
+        toast({
+          title:response.error ? response.error :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return;
+      }
+      if(!response.success){
+        setIsLoading(false)
+        toast({
+          title:response.message ? response.message :"network error",
+          status:"error",
+          isClosable:true
+        })
+        return;
+      }
+      if(response.success){
+        setIsLoading(false)
+       return navigate("/admin/dashboard/employees");
+      }
+
+    }
 
 
 
@@ -83,24 +105,24 @@ export default function Employee(){
           <Heading size="md">Edit Employee Detail</Heading>
         </Flex>
         <Box my={4} textAlign="left">
-          <form>
+          <form onSubmit={handleSubmit}>
           < FormControl>
               <FormLabel>Firstname</FormLabel>
-              <Input type="text" placeholder="employee firstname" value={employee.firstname}/>
+              <Input type="text" placeholder="employee firstname" name="firstname" value={employee.firstname}/>
             </FormControl>
             <FormControl>
               <FormLabel>Lastname</FormLabel>
-              <Input type="text" placeholder="employee lastname" value={employee.lastname}/>
+              <Input type="text" placeholder="employee lastname" name="lastname" value={employee.lastname}/>
             </FormControl>
             <HStack direction={{ base: 'column', sm: 'row' }}
                 align={'start'}>
             <FormControl>
               <FormLabel>Date Of Birth</FormLabel>
-              <Input type="date" placeholder="date of birth" />
+              <Input type="date" placeholder="date of birth" name="dob"/>
             </FormControl>
             <FormControl>
                 <FormLabel htmlFor='status'>Marital Status</FormLabel>
-                <Select id='country' placeholder='select marital status'>
+                <Select id='status' placeholder='select marital status' name="maritalStatus">
                     <option value="married">Married</option>
                     <option value="single">Single</option>
                 </Select>
@@ -108,11 +130,7 @@ export default function Employee(){
             </HStack>
             <FormControl>
               <FormLabel>Email</FormLabel>
-              <Input type="email" placeholder="employee@hrmsys.com" value={employee.email} />
-            </FormControl>
-            <FormControl mt={6}>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" placeholder="*******" />
+              <Input type="email" placeholder="employee@hrmsys.com" name="email" value={employee.email} />
             </FormControl>
             <HStack alignItems="end" spacing={5}>
             <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>}>

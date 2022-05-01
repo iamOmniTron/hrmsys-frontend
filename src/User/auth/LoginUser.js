@@ -52,14 +52,14 @@ export default function LoginUser(){
 
     return(
         <>
-        
+        <Heading>Employee Login</Heading>
         <VStack>
         <div className={`${step !==1 && "d-none"}`}>
         <Flex minH="100vh" justify="center" align="center" bg={useColorModeValue('gray.50', 'gray.800')} >
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
             <Stack>Login With Your Email</Stack>
             <Box
-                rounded={'lg'}
+                rounded={'lg'} 
                 bg={useColorModeValue('white', 'gray.700')}  
                 boxShadow={'lg'}
                 p={8}>
@@ -74,8 +74,7 @@ export default function LoginUser(){
                             bg: 'blue.500',
                             }} onClick={(e)=>{
                                 handleEmailOnSubmit();
-                                // setStep(2)
-                            }}>
+                            }} isLoading={isLoading}>
                         Next
                     </Button>
                 </Flex>
@@ -102,7 +101,7 @@ export default function LoginUser(){
                             bg: 'blue.500',
                             }} onClick={(e)=>{
                                 setStep(3)
-                            }}>
+                            }} isLoading={isLoading}>
                         Submit
                     </Button>
                 </Flex>

@@ -19,6 +19,7 @@ export default function AddEmployee(){
     const [firstname,setFirstname] = useState("");
     const [lastname,setLastname] = useState("");
     const [email,setEmail] = useState("");
+    const [files,setFiles] = useState("");
     const [dob,setDob] = useState("");
     const [password,setPassword] = useState("");
     const [maritalStatus,setMaritalStatus] = useState("");
@@ -43,16 +44,12 @@ export default function AddEmployee(){
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
-      const {data:response} = await axios.post(`${SERVER_URL}/employee`,{
-          firstname,
-          lastname,
-          email,
-          dob,
-          password,
-          maritalStatus
-      },{
+        const formData = new FormData(e.target);
+      const {data:response} = await axios.post(`${SERVER_URL}/employee`,
+      formData,{
         headers:{
-          "Authorization":`Bearer ${token}`
+          "Authorization":`Bearer ${token}`,
+          "content-type":"multipart/formdata"
         }
       });
       if(!response || typeof response.error == "string"){
@@ -91,24 +88,24 @@ export default function AddEmployee(){
           <Heading size="md">Add New Employee</Heading>
         </Flex>
         <Box my={4} textAlign="left">
-          <form>
+          <form onSubmit={handleSubmit}>
           < FormControl>
               <FormLabel>Firstname</FormLabel>
-              <Input type="text" placeholder="employee firstname" value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
+              <Input type="text" placeholder="employee firstname" name="firstname" value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
             </FormControl>
             <FormControl>
               <FormLabel>Lastname</FormLabel>
-              <Input type="text" placeholder="employee lastname" value={lastname} onChange={(e)=>setLastname(e.target.value)}/>
+              <Input type="text" placeholder="employee lastname" name="lastname" value={lastname} onChange={(e)=>setLastname(e.target.value)}/>
             </FormControl>
             <HStack direction={{ base: 'column', sm: 'row' }}
                 align={'start'}>
             <FormControl>
               <FormLabel>Date Of Birth</FormLabel>
-              <Input type="date" placeholder="date of birth" value={dob} onChange={(e)=>setDob(e.target.value)}/>
+              <Input type="date" placeholder="date of birth" name="dob" value={dob} onChange={(e)=>setDob(e.target.value)}/>
             </FormControl>
             <FormControl>
                 <FormLabel htmlFor='status'>Marital Status</FormLabel>
-                <Select id='country' placeholder='select marital status' value={maritalStatus} onChange={(e)=>setMaritalStatus(e.target.value)}>
+                <Select id='status' placeholder='select marital status' name="maritalStatus" value={maritalStatus} onChange={(e)=>setMaritalStatus(e.target.value)}>
                     <option value="married">Married</option>
                     <option value="single">Single</option>
                 </Select>
@@ -116,14 +113,21 @@ export default function AddEmployee(){
             </HStack>
             <FormControl>
               <FormLabel>Email</FormLabel>
-              <Input type="email" placeholder="employee@hrmsys.com" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              <Input type="email" placeholder="employee@hrmsys.com" name="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
             </FormControl>
             <FormControl mt={6}>
               <FormLabel>Password</FormLabel>
-              <Input type="password" placeholder="*******" value={password} onChange={(e)=>setPassword(e.target.value)} />
+              <Input type="text" placeholder="*******" name="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+            </FormControl>
+            <FormControl mt={6}>
+              <FormLabel>Images</FormLabel>
+              <Input type="file" placeholder="upload image" name="picture" onChange={(e)=>{
+                setFiles(e.target.files[0]);
+                console.log(e.target.files[0])
+                }} />
             </FormControl>
             <HStack alignItems="end" spacing={5}>
-            <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>} onClick={handleSubmit} isLoading={isLoading}>
+            <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>}  isLoading={isLoading}>
               Save
             </Button>
             <Button type="button" size="md" mt={4} colorScheme="red" leftIcon={<MdDelete/>} onClick={onOpen}>

@@ -11,7 +11,9 @@ import AddRole from "./Admin/Role/add";
 import AddSkill from "./Admin/Skill/add";
 import Skills from "./Admin/Skill/skills";
 import Skill from "./Admin/Skill/skill";
+import Attendance from "./Admin/Attendance/attendance";
 import LoginUser from "./User/auth/LoginUser";
+import Payroll from "./Admin/Payroll/payroll";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import AuthContext from "./contexts/auth";
 import AdminContext from "./contexts/admin";
@@ -31,13 +33,15 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard/>}>
               <Route path="employees" index element={<Employees/>}/>
               <Route path="employee/:id" element={<Employee/>}/>
-              <Route path="employee/add" exact elemet={<AddEmployee/>}/>
+              <Route path="employee/add" exact element={<AddEmployee/>}/>
               <Route path="roles" element={<Roles/>}/>
               <Route path="role/:id" element={<Role/>}/>
               <Route path="role/add" exact element={<AddRole/>}/>
               <Route path="skills" element={<Skills/>}/>
               <Route path="skill/:id" element={<Skill/>}/>
               <Route path="skill/add" exact element={<AddSkill/>}/>
+              <Route path="attendance" element={<Attendance/>}/>
+              <Route path="payroll" element={<Payroll/>}/>
             </Route>
         </Routes>
       </Router>

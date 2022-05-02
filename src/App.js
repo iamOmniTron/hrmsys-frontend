@@ -14,6 +14,12 @@ import Skill from "./Admin/Skill/skill";
 import Attendance from "./Admin/Attendance/attendance";
 import LoginUser from "./User/auth/LoginUser";
 import Payroll from "./Admin/Payroll/payroll";
+import Program from "./User/program/program"
+import AddProgram from "./User/program/add";
+import UserDashboard from "./User/dashboard";
+import Session from "./User/session/session";
+import Profile from "./User/profile";
+
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import AuthContext from "./contexts/auth";
 import AdminContext from "./contexts/admin";
@@ -29,6 +35,12 @@ function App() {
       <Router>
         <Routes>
             <Route path="/login" element={<LoginUser/>}/>
+            <Route path="/user/dashboard" element={<UserDashboard/>}>
+              <Route path="programs" element={<Program/>}/>
+              <Route path="profile" element={<Profile/>}/>
+              <Route path="sessions" element={<Session/>}/>
+              <Route path="program/add" element={<AddProgram/>}/>
+            </Route>
             <Route path="/admin/login" element={<LoginAdmin/>}/>
             <Route path="/admin/dashboard" element={<Dashboard/>}>
               <Route path="employees" index element={<Employees/>}/>

@@ -41,7 +41,7 @@ const LinkItems = [
   { name:"Levels", icon: BsTools, link:"training programs"},
 ];
 
-export default function Dashboard({children}){
+export default function UserDashboard({children}){
     const [token,_] = useContext(AuthContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate();

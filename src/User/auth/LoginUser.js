@@ -17,6 +17,7 @@ export default function LoginUser(){
     const [step,setStep] = useState(1);
     const [password,setPassword] = useState("");
     const [token,setToken] = useContext(AuthContext);
+    const [isLoading,setIsLoading] = useState(false);
     const [urls,setUrls] = useState("");
 
     const handleEmailOnSubmit = async()=>{

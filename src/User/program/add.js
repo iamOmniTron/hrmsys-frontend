@@ -8,8 +8,9 @@ import {MdDelete,MdSave} from "react-icons/md";
 import {useState,useEffect, useContext} from "react";
 import axios from "axios";
 import {useNavigate } from "react-router-dom";
+import AuthContext from "../../contexts/auth";
+
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-import AuthContext from "../../../contexts/auth";
 
 export default function AddProgram(){
     const [skills,setSkills] = useState([]);

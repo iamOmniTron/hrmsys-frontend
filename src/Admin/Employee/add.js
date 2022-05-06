@@ -27,20 +27,6 @@ export default function AddEmployee(){
     const navigate = useNavigate();
     const toast = useToast();
 
-    // const checkIsLoggedIn = (token)=>{
-    //   if(!token || token.length < 1){
-    //     return navigate("/admin/login")
-    //   }
-    //   return;
-    // }
-
-    // const checkIsAdmin = (isAdmin)=>{
-    //     if(!isAdmin){
-    //       return navigate("/admin/login");
-    //     }
-    //     return;
-    //   }
-
 
     const handleSubmit = async (e)=>{
         e.preventDefault()

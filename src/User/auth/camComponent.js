@@ -9,24 +9,26 @@ const videoConstraints = {
     facingMode: "user"
   }
 
-export default function Camera({setStep}){
-    const camRef = useRef(null);
-    const [img,setImg] = useState("");
+export default function Camera({camRef,handleCapture}){
+    const [image,setImage] = useState("");
+    const vidRef = useRef(null)
     const capture = useCallback(
         () => {
-          const imageSrc = camRef.current.getScreenshot();
-          setImg(imageSrc);
+          const imageSrc = vidRef.current.getScreenshot();
+          setImage(imageSrc);
+         image !== "" && handleCapture();
         },
-        [camRef]
+        [vidRef,image]
       );
     return(
-        img !== ""? <Image src={img} height="300px" objectFit={"cover"}/> :
+        image !== ""? <img src={image} crossOrigin="anonymous" height={"650"} width={"940"} ref={camRef}/> :
         <>
        
         <Flex>
             <VStack>
-            <WebCam audio={false} ref={camRef}
+            <WebCam audio={false} ref={vidRef}
                     height={100}
+                    videoConstraints={videoConstraints}
                     screenshotFormat="image/jpeg"
                     width={280}
                     mirrored={true} />
@@ -37,7 +39,6 @@ export default function Camera({setStep}){
                         }} 
                         onClick={(e)=>{
                             capture();
-                            setStep(3)
                         }}
                         >Snap</Button>
             </VStack>

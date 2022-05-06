@@ -12,6 +12,8 @@ import AddSkill from "./Admin/Skill/add";
 import Skills from "./Admin/Skill/skills";
 import Skill from "./Admin/Skill/skill";
 import Attendance from "./Admin/Attendance/attendance";
+import Trainings from "./Admin/Training/trainings";
+import AddTraining from "./Admin/Training/add";
 import LoginUser from "./User/auth/LoginUser";
 import Payroll from "./Admin/Payroll/payroll";
 import Program from "./User/program/program"
@@ -19,6 +21,7 @@ import AddProgram from "./User/program/add";
 import UserDashboard from "./User/dashboard";
 import Session from "./User/session/session";
 import Profile from "./User/profile";
+// import Cam from "./User/auth/test";
 
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import AuthContext from "./contexts/auth";
@@ -34,11 +37,12 @@ function App() {
         <AdminContext.Provider value={[isAdmin,setIsAdmin]}>
       <Router>
         <Routes>
+            {/* <Route path="/" element={<Cam/>}/> */}
             <Route path="/login" element={<LoginUser/>}/>
             <Route path="/user/dashboard" element={<UserDashboard/>}>
               <Route path="programs" element={<Program/>}/>
               <Route path="profile" element={<Profile/>}/>
-              <Route path="sessions" element={<Session/>}/>
+              <Route path="attendance" element={<Session/>}/>
               <Route path="program/add" element={<AddProgram/>}/>
             </Route>
             <Route path="/admin/login" element={<LoginAdmin/>}/>
@@ -54,6 +58,8 @@ function App() {
               <Route path="skill/add" exact element={<AddSkill/>}/>
               <Route path="attendance" element={<Attendance/>}/>
               <Route path="payroll" element={<Payroll/>}/>
+              <Route path="trainings" element={<Trainings/>} />
+              <Route path="trainings/add" element={<AddTraining/>}/>
             </Route>
         </Routes>
       </Router>

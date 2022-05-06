@@ -1,11 +1,12 @@
 import {useState,useEffect,useContext} from "react";
-import AuthContext from "../../../contexts/auth";
+import AuthContext from "../../contexts/auth";
 import {Flex,Button,Box,Spacer,Heading,Table,
     Thead,
     Tbody,
     Tr,
     Th,
     TableContainer,useToast} from "@chakra-ui/react";
+import {MdAdd} from "react-icons/md"
 import Row from "./row";
 import NoRecord from "../../Components/norecord";
 import axios from "axios";
@@ -23,7 +24,7 @@ export default function Program(){
 
     useEffect(()=>{
         const fetchPrograms = async ()=>{
-            const {data:response} = await axios.get(`${SERVER_URL}/employee/${id}`,{
+            const {data:response} = await axios.get(`${SERVER_URL}/programs`,{
               headers:{
                 "Authorization":`Bearer ${token}`
               }
@@ -61,12 +62,10 @@ export default function Program(){
         <Flex direction="column"  minHeight="100vh">
             <Flex direction="row" justifyContent="space-between">
                 <Box p="2px">
-                    <Heading size="md">Employees Records</Heading>
+                    <Heading size="md">Programs</Heading>
                 </Box>
                 <Spacer/>
-                <Box>
-                    <Button leftIcon={<MdAdd/>} colorScheme='blue' onClick={redirect}>Add</Button>
-                </Box>
+                <Button leftIcon={<MdAdd/>} colourSchee="facbook">Add </Button>
             </Flex>
             <TableContainer overflowX="auto">
   <Table variant='simple'>

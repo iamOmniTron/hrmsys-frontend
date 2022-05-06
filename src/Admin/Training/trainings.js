@@ -1,3 +1,4 @@
+import axios from "axios";
 import {useState,useEffect,useContext} from "react";
 import {Flex,Button,Box,Spacer,Heading,Table,
     Thead,
@@ -5,75 +6,84 @@ import {Flex,Button,Box,Spacer,Heading,Table,
     Tr,
     Th,
     TableContainer,useToast} from "@chakra-ui/react";
-import {MdAdd} from "react-icons/md";
-import Row from "./row";
-import axios from "axios";
-import AuthContext from "../../contexts/auth";
+import {useNavigate} from "react-router-dom";
 import Loader from "../../Components/loader";
+import Row from "./row";
 import NoRecord from "../../Components/norecord";
-const SERVER_URL = process.env.SERVER_URL;
+import {MdAdd} from "react-icons/md";
+import AuthContext from "../../contexts/auth";
 
-export default function Session(){
-    const [token,_] = useContext(AuthContext);
-    const toast = useToast();
-    const [sessions,setSessions] = useState([]);
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+
+export default function Trainings(){
+    const [trainings,setTrainings] = useState([]);
     const [isLoading,setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const toast = useToast();
+    const [token,_] = useContext(AuthContext);
+    
+    const redirect = (e)=>{
+        navigate("/admin/dashboard/training/add")
+    }
+
     useEffect(()=>{
-        const fetchSessions = async ()=>{
-            const {data:response} = await axios.get(`${SERVER_URL}/session/user`,{
+        const fetchTrainings = async ()=>{
+            const {data:response} = await axios.get(`${SERVER_URL}/trainings/all`,{
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
             });
             if(!response || typeof response.error == "string"){
-                setIsLoading(false)
                 toast({
                   title:response.error ? response.error :"network error",
                   status:"error",
                   isClosable:true
                 })
-                return;
+                return setIsLoading(false);
               }
               if(!response.success){
-                setIsLoading(false)
                 toast({
                   title:response.message ? response.message :"network error",
                   status:"error",
                   isClosable:true
                 })
-                return;
+                return setIsLoading(false);
               }
               if(response.success){
-                setIsLoading(false);
-                setSessions([...response.data]);
+                setTrainings([...response.data]);
               }
-              return;
+              return setIsLoading(false);
         }
-        fetchSessions();
+        fetchTrainings();
     },[token]);
-    return (
+    return(
         isLoading?
         <Loader/> :
         <>
         <Flex direction="column"  minHeight="100vh">
         <Flex direction="row" justifyContent="space-between">
             <Box p="2px">
-                <Heading size="md">Employees Records</Heading>
+                <Heading size="md">Employees Training Programs</Heading>
+            </Box>
+            <Spacer/>
+            <Box>
+                <Button leftIcon={<MdAdd/>} colorScheme='blue' onClick={redirect}>Add</Button>
             </Box>
         </Flex>
         <TableContainer overflowX="auto">
 <Table variant='simple'>
 <Thead>
   <Tr>
-    <Th>Day</Th>
-    <Th>Time in</Th>
-    <Th>Time out</Th>
+    <Th>Name</Th>
+    <Th>Duration</Th>
+    <Th></Th>
   </Tr>
 </Thead>
 <Tbody>
   {
-    sessions.length >0 ? sessions.map((session,index)=>{
-     return (<Row key={index} prop={session}/>);
+    trainings.length >0 ? trainings.map((training,index)=>{
+     return (<Row key={index} prop={training}/>);
     })
     :
     <NoRecord/>

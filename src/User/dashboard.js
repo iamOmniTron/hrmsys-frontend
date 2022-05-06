@@ -25,24 +25,20 @@ import {
   FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
-import {FaHandshake} from "react-icons/fa";
 import {ImUsers} from "react-icons/im";
 import {BsTools} from "react-icons/bs";
-import {MdPayments} from "react-icons/md";
-import {VscSignIn} from "react-icons/vsc";
-import {GiSkills} from "react-icons/gi";
 import {AiOutlineDashboard} from "react-icons/ai";
 import AuthContext from "../contexts/auth";
 import {useEffect,useContext} from "react";
 
 const LinkItems = [
   { name : "Dashboard", icon:AiOutlineDashboard,link:"profile"},
-  { name: 'Employees', icon: ImUsers,link:"attendance" },
-  { name:"Levels", icon: BsTools, link:"training programs"},
+  { name: 'Attendance', icon: ImUsers,link:"attendance" },
+  { name:"Training Programs", icon: BsTools, link:"programs"},
 ];
 
 export default function UserDashboard({children}){
-    const [token,_] = useContext(AuthContext);
+    const [token,setToken] = useContext(AuthContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate();
 
@@ -75,7 +71,7 @@ export default function UserDashboard({children}){
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <MobileNav onOpen={onOpen} setIsAdmin={setIsAdmin} setToken={setToken}/>
+      <MobileNav onOpen={onOpen} setToken={setToken}/>
       <Box ml={{ base: 0, md: 60 }} p="4">
         <Outlet/>
       </Box>
@@ -140,11 +136,10 @@ const NavItem = ({ icon,link, children, ...rest }) => {
     );
   };
 
-const MobileNav = ({ onOpen,setToken,setIsAdmin}) => {
-    // const handleLogout = (e)=>{
-    //   setToken("");
-    //   setIsAdmin("");
-    // }
+const MobileNav = ({ onOpen,setToken}) => {
+    const handleLogout = (e)=>{
+      setToken("");
+    }
     return (
       <Flex
         ml={{ base: 0, md: 60 }}
@@ -208,7 +203,7 @@ const MobileNav = ({ onOpen,setToken,setIsAdmin}) => {
                 bg={useColorModeValue('white', 'gray.900')}
                 borderColor={useColorModeValue('gray.200', 'gray.700')}>
                 <MenuDivider />
-                <MenuItem>Sign out</MenuItem>
+                <MenuItem onClick={handleLogout}>Sign out</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

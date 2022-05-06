@@ -1,6 +1,7 @@
 import * as faceapi from "face-api.js";
-import {useState,useEffect,useRef} from "react";
+import {useState,useEffect,useRef,useContext} from "react";
 import {VStack,FormControl,Input,FormLabel,Button,Flex,useColorModeValue,Stack,useToast,Box,Heading} from "@chakra-ui/react";
+import AuthContext from "../../contexts/auth";
 import {useNavigate} from "react-router-dom";
 import Camera from "./camComponent";
 import axios from "axios";
@@ -15,9 +16,7 @@ export default function LoginUser(){
     const [email,setEmail] = useState("");
     const [step,setStep] = useState(1);
     const [password,setPassword] = useState("");
-    const [isLoading,setIsLoading] = useState(false);
-    const [isModelsLoaded,setIsModelsLoaded] = useState(false);
-    const [src,setSrc] = useState("");
+    const [token,setToken] = useContext(AuthContext);
     const [urls,setUrls] = useState("");
 
     const handleEmailOnSubmit = async()=>{

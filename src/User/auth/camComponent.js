@@ -1,4 +1,4 @@
-import {useRef,useCallback,useState} from "react";
+import {useRef,useCallback,useState, useEffect} from "react";
 import WebCam from "react-webcam";
 import {Flex,VStack,Button,Image} from "@chakra-ui/react";
 import {FiCamera} from "react-icons/fi"
@@ -12,16 +12,24 @@ const videoConstraints = {
 export default function Camera({camRef,handleCapture}){
     const [image,setImage] = useState("");
     const vidRef = useRef(null)
+
+
+    useEffect(() => {
+        if (image !== "") {
+            handleCapture()
+        } 
+      }, [image]);
+
     const capture = useCallback(
         () => {
           const imageSrc = vidRef.current.getScreenshot();
           setImage(imageSrc);
-         image !== "" && handleCapture();
+         //image !== "" && handleCapture();
         },
         [vidRef,image]
       );
     return(
-        image !== ""? <img src={image} crossOrigin="anonymous" height={"650"} width={"940"} ref={camRef}/> :
+        image !== "" ? <img src={image} crossOrigin="anonymous" height={"650"} width={"940"} ref={camRef}/> :
         <>
        
         <Flex>

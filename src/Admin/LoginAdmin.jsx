@@ -50,10 +50,11 @@ export default function LoginAdmin (){
         return;
       }
       if(response.data && response.data.length >1){
+        console.log(response.data)
         setToken(response.data);
         setIsAdmin(true);
         setIsLoading(false);
-        navigate("/admin/dashboard");
+        navigate("/admin/dashboard/employees");
         return;
       }
       return;

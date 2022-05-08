@@ -67,7 +67,7 @@ export default function Row({prop}){
     }
     return(
         <>
-        <Tr>
+        <Tr width={'100%'}>
             <Td>{prop.firstname}</Td>
             <Td>{prop.lastname}</Td>
             <Td>{prop.dob}</Td>

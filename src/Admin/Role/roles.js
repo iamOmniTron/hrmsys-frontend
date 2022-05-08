@@ -64,9 +64,9 @@ export default function Roles(){
         <Loader/> :
         <>
        <Flex direction="column"  minHeight="100vh">
-           <Flex direction="row" justifyContent="space-between">
+           <Flex direction="row" justifyContent="space-between" borderBottom={'1px'} pb={'8px'}>
                <Box p="2px">
-                   <Heading size="md">Job Roles</Heading>
+                   <Heading size="md">Job Levels</Heading>
                </Box>
                <Spacer/>
                <Box>

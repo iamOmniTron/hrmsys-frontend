@@ -17,6 +17,7 @@ export default function Employee(){
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [token] = useContext(AuthContext);
     const [employee,setEmployee] = useState({});
+    const [ professions,setProfessions] = useState([]);
     const [isLoading,setIsLoading] = useState(false); 
     const {id} = useParams();
     const toast = useToast();
@@ -90,8 +91,35 @@ export default function Employee(){
         }
         return ;
       }
-  
+      const fetchProfessions = async()=>{
+        const {data:response} = await axios.get(`${SERVER_URL}/professions/all`,{
+            headers:{
+                "Authorization":`Bearee ${token}`
+            }
+        });
+        if (!response || typeof response.error == "string") {
+            toast({
+                title: response.error ? response.error : "network error",
+                status: "error",
+                isClosable: true
+            })
+            return setIsLoading(false);
+        }
+        if (!response.success) {
+            toast({
+                title: response.message ? response.message : "network error",
+                status: "error",
+                isClosable: true
+            })
+            return setIsLoading(false);
+        }
+        if (response.success) {
+            setIsLoading(false);
+            setProfessions(response.data);
+        }
+    }
       fetchEmployee();
+      fetchProfessions();
 
     },[token,id,toast]);
 

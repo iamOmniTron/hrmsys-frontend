@@ -4,7 +4,7 @@ import {
     ModalContent,
     ModalFooter,
     ModalBody,
-    ModalCloseButton, useDisclosure, useToast,useColorModeValue
+    ModalCloseButton, useDisclosure, useToast,useColorModeValue,InputGroup,InputLeftAddon
 } from "@chakra-ui/react";
 import {MdDelete, MdSave} from "react-icons/md";
 import {useState, useEffect,useContext} from "react";
@@ -125,7 +125,7 @@ export default function AddEmployee() {
                                     align={'start'} mt={6}>
                                 <FormControl >
                                     <FormLabel>Date Of Birth</FormLabel>
-                                    <Input type="date" placeholder="date of birth" name="dob"/>
+                                    <Input type="date" size="md" placeholder="date of birth" name="dob"/>
                                 </FormControl>
                                 <FormControl>
                                     <FormLabel htmlFor='status'>Marital Status</FormLabel>
@@ -139,7 +139,10 @@ export default function AddEmployee() {
                                 <Select id='status' placeholder='select occupation' name="ProfessionId">
                                     {
                                         professions !== [] && professions.map((prof,idx)=>{
-                                            <option value={prof.id} key={idx}>prof.name</option>
+                                            console.log(prof);
+                                            return(
+                                            <option value={prof.id} key={idx}>{prof.name}</option>
+                                            );
                                         })
                                     }
                                 </Select>
@@ -152,7 +155,10 @@ export default function AddEmployee() {
                             </FormControl>
                             <FormControl >
                                 <FormLabel>Phone</FormLabel>
-                                <Input type="telephone" placeholder="enter employee phone number" name="phone"/>
+                                <InputGroup>
+                                <InputLeftAddon children="+234"/>
+                                <Input type="tel" placeholder="enter employee phone number" name="phone"/>
+                                </InputGroup>
                             </FormControl>
                             <FormControl >
                             <FormLabel htmlFor='status'>Gender</FormLabel>
@@ -181,11 +187,8 @@ export default function AddEmployee() {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Image</FormLabel>
-                                <Input type="file" placeholder="upload image" name="picture"/>
+                                <Input type="file" size="sm" placeholder="upload image" name="picture"/>
                             </FormControl>
-                            </HStack>
-                            <HStack>
-
                             </HStack>
                             <HStack alignItems="end" spacing={5}>
                                 <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>}

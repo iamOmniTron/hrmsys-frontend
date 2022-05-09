@@ -68,6 +68,7 @@ export default function Row({prop}){
     return(
         <>
         <Tr>
+            <Td>{prop.id}</Td>
             <Td>{prop.name}</Td>
             <Td>{prop.salary}</Td>
             <Td> 

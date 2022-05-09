@@ -77,6 +77,7 @@ export default function Roles(){
  <Table variant='simple'>
    <Thead>
      <Tr>
+       <Th>Id</Th>
        <Th>Name</Th>
        <Th>Salary</Th>
        <Th></Th>

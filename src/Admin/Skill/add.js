@@ -5,7 +5,7 @@ import {Flex,Box,FormLabel,FormControl,Input,Button,Heading,HStack,Stack, Modal,
     ModalContent,
     ModalFooter,
     ModalBody,
-    ModalCloseButton,useDisclosure,useToast} from "@chakra-ui/react";
+    ModalCloseButton,useDisclosure,useColorModeValue,useToast} from "@chakra-ui/react";
 import {MdDelete,MdSave} from "react-icons/md";
 import AuthContext from "../../contexts/auth";
 // import AdminContext from "../../contexts/admin";
@@ -58,7 +58,9 @@ export default function AddSkill(){
         <>
          <PopUp isOpen={isOpen} onClose={onClose}/>
         <Flex direction="column"  minHeight="100vh">
-        <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6}>
+        <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'2xl'}
+        bg={useColorModeValue('white', 'gray.700')}
+        rounded={'xl'}>
         <Flex align="start">
           <Heading size="md">Add New Skill</Heading>
         </Flex>
@@ -66,7 +68,7 @@ export default function AddSkill(){
           <form>
           < FormControl>
               <FormLabel>Name</FormLabel>
-              <Input type="text" placeholder="Skill name" value={name} onChange={(e)=>setName(e.target.value)}/>
+              <Input type="text" placeholder="Skill name" size={"md"} value={name} onChange={(e)=>setName(e.target.value)}/>
             </FormControl>
             <HStack alignItems="end" spacing={5}>
             <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>} isLoading={isLoading} onClick={handleSubmit}>

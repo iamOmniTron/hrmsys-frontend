@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {useState,useEffect,useContext} from "react";
+import {useState,useContext} from "react";
 import {Flex,Box,FormLabel,FormControl,Input,Button,Heading,HStack,Select,Stack, Modal,
     ModalOverlay,
     ModalContent,
@@ -23,13 +23,12 @@ export default function AddRole(){
     const [salary,setSalary] = useState("");
     const [name,setName] = useState("");
     const [isAdmin] = useContext(AdminContext);
-    const [salaries,setSalaries] = useState([]);
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setIsLoading(true);
         const {data:response} = await axios.post(`${SERVER_URL}/profession/`,{
-          name,SalaryId:salary
+          name,salary
         },{
             headers:{
                 "Authorization":`Bearer ${token}`
@@ -58,44 +57,6 @@ export default function AddRole(){
     }
 
 
-    useEffect(()=>{
-    
-        const fetchSalaries = async ()=>{
-            setIsLoading(true);
-            const {data:response} = await axios.get(`${SERVER_URL}/salaries/all`,{
-                headers:{
-                    "Authorization":`Bearer ${token}`
-                }
-            });
-            if(!response || typeof response.error == "string"){
-                toast({
-                  title:response.error ? response.error :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return setIsLoading(false);
-              }
-              if(!response.success){
-                toast({
-                  title:response.message ? response.message :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return setIsLoading(false);
-              }
-              if(response.success){
-                setSalaries(response.data);
-                console.log(salaries);
-              }
-              return setIsLoading(false);
-        }
- 
-        // checkIsLoggedIn(token);
-        // checkIsAdmin(isAdmin);
-        fetchSalaries();
-    },[token]);
-
-
 
     return(
         <>
@@ -115,13 +76,7 @@ export default function AddRole(){
             </FormControl>
             <FormControl>
             <FormLabel htmlFor='status'>Salary</FormLabel>
-                <Select id='country' placeholder='select role salary' value={salary} onChange={(e)=>setSalary(e.target.value)}>
-                    {
-                        salaries && salaries.map((s,index)=>{
-                            <option key={index} value={s.id}>{s.amount}</option>
-                        })
-                    }
-                </Select>
+                <Input type="number" placeholder="salary amount" value={salary} onChange={(e)=>setSalary(e.target.value)}/>
             </FormControl>
             <HStack alignItems="end" spacing={5}>
             <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>} isLoading={isLoading} onClick={handleSubmit}>

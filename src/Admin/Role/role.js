@@ -107,7 +107,7 @@ export default function Role(){
          <PopUp isOpen={isOpen} onClose={onClose} id={id} token={token} toast={toast}/>
         <Flex direction="column"  minHeight="100vh">
         <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'2xl'}
-        bg={useColorModeValue('white', 'gray.700')}>
+        bg={'gray.700'}>
         <Flex align="start">
           <Heading size="md">Edit Role Details</Heading>
         </Flex>

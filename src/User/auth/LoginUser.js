@@ -130,7 +130,7 @@ export default function LoginUser() {
                     return;
                 }
 
-                const faceMatcher = new faceapi.FaceMatcher(new faceapi.LabeledFaceDescriptors(name, [result.descriptor]), .8);
+                const faceMatcher = new faceapi.FaceMatcher(new faceapi.LabeledFaceDescriptors(name, [result.descriptor]),0.8);
 
                 // const faceMatcher = new faceapi.FaceMatcher(detections,.6);
 

@@ -81,6 +81,7 @@ export default function Employees() {
                         <Table variant='simple'>
                             <Thead>
                                 <Tr>
+                                    <Th>Id</Th>
                                     <Th>Firstname</Th>
                                     <Th>Lastname</Th>
                                     <Th>Date Of Birth</Th>

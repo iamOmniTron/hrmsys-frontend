@@ -5,6 +5,7 @@ import {Flex,Box,FormLabel,FormControl,Input,Button,Heading,HStack,Select,Stack,
     ModalContent,
     ModalFooter,
     ModalBody,
+    useColorModeValue,
     ModalCloseButton,useDisclosure,useToast} from "@chakra-ui/react";
 import {MdDelete,MdSave} from "react-icons/md";
 import AuthContext from "../../contexts/auth";
@@ -28,7 +29,7 @@ export default function AddRole(){
         e.preventDefault();
         setIsLoading(true);
         const {data:response} = await axios.post(`${SERVER_URL}/profession/`,{
-          name,salaryId:salary
+          name,SalaryId:salary
         },{
             headers:{
                 "Authorization":`Bearer ${token}`
@@ -84,6 +85,7 @@ export default function AddRole(){
               }
               if(response.success){
                 setSalaries(response.data);
+                console.log(salaries);
               }
               return setIsLoading(false);
         }
@@ -99,7 +101,9 @@ export default function AddRole(){
         <>
          <PopUp isOpen={isOpen} onClose={onClose}/>
         <Flex direction="column"  minHeight="100vh">
-        <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6}>
+        <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'2xl'}
+        bg={useColorModeValue('white', 'gray.700')}
+        rounded={'xl'}>
         <Flex align="start">
           <Heading size="md">Add New Role</Heading>
         </Flex>

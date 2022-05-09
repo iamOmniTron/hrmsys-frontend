@@ -68,10 +68,11 @@ export default function Row({prop}){
     return(
         <>
         <Tr width={'100%'}>
+            <td>{prop.id}</td>
             <Td>{prop.firstname}</Td>
             <Td>{prop.lastname}</Td>
             <Td>{prop.dob}</Td>
-            <Td>{prop.profession}</Td>
+            <Td>{prop.Profession?.name}</Td>
             <Td> 
             <HStack> 
                 <Button leftIcon={<BiEdit/>} colorScheme="facebook" onClick={handleEdit}>Edit</Button>

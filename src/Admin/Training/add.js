@@ -65,7 +65,7 @@ export default function AddTraining() {
                     <Box my={4} textAlign="left">
                         <form onSubmit={handleSubmit}>
                             < FormControl>
-                                <FormLabel>Training Nmae</FormLabel>
+                                <FormLabel>Skill Name</FormLabel>
                                 <Input type="text" placeholder="training name" value={name}
                                        onChange={(e) => setName(e.target.value)}/>
                             </FormControl>

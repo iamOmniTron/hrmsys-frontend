@@ -25,7 +25,6 @@ import {
   FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
-import {ImUsers} from "react-icons/im";
 import {BsTools} from "react-icons/bs";
 import {AiOutlineDashboard} from "react-icons/ai";
 import AuthContext from "../contexts/auth";
@@ -33,7 +32,6 @@ import {useEffect,useContext} from "react";
 
 const LinkItems = [
   { name : "Dashboard", icon:AiOutlineDashboard,link:"profile"},
-  { name: 'Attendance', icon: ImUsers,link:"attendance" },
   { name:"Training Programs", icon: BsTools, link:"programs"},
 ];
 
@@ -137,8 +135,10 @@ const NavItem = ({ icon,link, children, ...rest }) => {
   };
 
 const MobileNav = ({ onOpen,setToken}) => {
+    const navigate = useNavigate();
     const handleLogout = (e)=>{
       setToken("");
+      navigate("/login");
     }
     return (
       <Flex

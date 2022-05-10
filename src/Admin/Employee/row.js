@@ -14,6 +14,13 @@ export default function Row({prop}){
     const toast = useToast();
     const navigate = useNavigate();
 
+    const STATUSES = {
+        "1":"Active",
+        "2":"On Training",
+        "3":"On Leave",
+        "4":"Retired"
+    }
+
     const handleDelete = async(e)=>{
         try{
             setIsLoading(true);
@@ -73,6 +80,7 @@ export default function Row({prop}){
             <Td>{prop.lastname}</Td>
             <Td>{prop.dob}</Td>
             <Td>{prop.Profession?.name}</Td>
+            <Td>{STATUSES[prop.status.toString()]}</Td>
             <Td> 
             <HStack> 
                 <Button leftIcon={<BiEdit/>} colorScheme="facebook" onClick={handleEdit}>Edit</Button>

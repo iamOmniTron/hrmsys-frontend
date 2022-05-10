@@ -13,10 +13,8 @@ import AuthContext from "../../contexts/auth";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function AddProgram(){
-    const [skills,setSkills] = useState([]);
     const [trainings,setTrainings]= useState([]);
     const [token,_] = useContext(AuthContext);
-    const [skill,setSkill] = useState("");
     const [training,setTraining] = useState("");
     const [isLoading,setIsLoading]= useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,8 +22,7 @@ export default function AddProgram(){
     const navigate = useNavigate();
 
     const handleSubmit = async()=>{
-        const fetchSkills = async()=>{
-            const {data:response} = await axios.get(`${SERVER_URL}/program`,{
+            const {data:response} = await axios.post(`${SERVER_URL}/employee/training/${training}`,{
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
@@ -48,41 +45,11 @@ export default function AddProgram(){
               }
               if(response.success){
                 setIsLoading(false);
-                return navigate("/user/dashboard/programs")
+                return navigate("/user/dashboard/profile")
               }
-        }
     }
 
     useEffect(()=>{
-        const fetchSkills = async()=>{
-            const {data:response} = await axios.get(`${SERVER_URL}/skills/all`,{
-                headers:{
-                    "Authorization":`Bearer ${token}`
-                }
-            });
-            if(!response || typeof response.error == "string"){
-                toast({
-                  title:response.error ? response.error :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return setIsLoading(false);
-              }
-              if(!response.success){
-                toast({
-                  title:response.message ? response.message :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return setIsLoading(false);
-              }
-              if(response.success){
-                setIsLoading(false);
-                setSkills([...response.data]);
-              }
-              return;
-        }
-
         const fetchTrainings = async()=>{
             const {data:response} = await axios.get(`${SERVER_URL}/trainings/all`,{
                 headers:{
@@ -113,7 +80,6 @@ export default function AddProgram(){
         }
 
         fetchTrainings();
-        fetchSkills();
     },[token]);
 
 
@@ -121,7 +87,9 @@ export default function AddProgram(){
         <>
                  <PopUp isOpen={isOpen} onClose={onClose}/>
         <Flex direction="column"  minHeight="100vh">
-        <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6}>
+        <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'2xl'}
+        bg={useColorModeValue('white', 'gray.700')}
+        rounded={'xl'}>
         <Flex align="start">
           <Heading size="md">Join A Program</Heading>
         </Flex>
@@ -132,17 +100,9 @@ export default function AddProgram(){
                 <Select id='training' placeholder='select training' name="training" value={training} onChange={(e)=>setTraining(e.target.value)}>
                    {
                        trainings && trainings.map((t,index)=>{
-                        <option key={index} value={t.id}>{t.name}</option>
-                       })
-                   }
-                </Select>
-                </FormControl>
-                <FormControl>
-                <FormLabel htmlFor='skill'>Skill</FormLabel>
-                <Select id='skill' placeholder='select skill' name="skill" value={skill} onChange={(e)=>setSkill(e.target.value)}>
-                   {
-                       skills && skills.map((s,index)=>{
-                        <option key={index} value={s.id}>{s.name}</option>
+                         return(
+                          <option key={index} value={t.id}>{t.name}</option>
+                         )
                        })
                    }
                 </Select>

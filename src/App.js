@@ -8,18 +8,12 @@ import Roles from "./Admin/Role/roles";
 import Role from "./Admin/Role/role";
 import AddEmployee from "./Admin/Employee/add";
 import AddRole from "./Admin/Role/add";
-import AddSkill from "./Admin/Skill/add";
-import Skills from "./Admin/Skill/skills";
-import Skill from "./Admin/Skill/skill";
-import Attendance from "./Admin/Attendance/attendance";
 import Trainings from "./Admin/Training/trainings";
 import AddTraining from "./Admin/Training/add";
 import LoginUser from "./User/auth/LoginUser";
 import Payroll from "./Admin/Payroll/payroll";
-import Program from "./User/program/program"
 import AddProgram from "./User/program/add";
 import UserDashboard from "./User/dashboard";
-import Session from "./User/session/session";
 import Profile from "./User/profile";
 // import Cam from "./User/auth/test";
 
@@ -40,9 +34,7 @@ function App() {
             {/* <Route path="/" element={<Cam/>}/> */}
             <Route path="/login" element={<LoginUser/>}/>
             <Route path="/user/dashboard" element={<UserDashboard/>}>
-              <Route path="programs" element={<Program/>}/>
               <Route path="profile" element={<Profile/>}/>
-              <Route path="attendance" element={<Session/>}/>
               <Route path="program/add" element={<AddProgram/>}/>
             </Route>
             <Route path="/admin/login" element={<LoginAdmin/>}/>
@@ -53,10 +45,6 @@ function App() {
               <Route path="roles" element={<Roles/>}/>
               <Route path="role/:id" element={<Role/>}/>
               <Route path="role/add" exact element={<AddRole/>}/>
-              <Route path="skills" element={<Skills/>}/>
-              <Route path="skill/:id" element={<Skill/>}/>
-              <Route path="skill/add" exact element={<AddSkill/>}/>
-              <Route path="attendance" element={<Attendance/>}/>
               <Route path="payroll" element={<Payroll/>}/>
               <Route path="trainings" element={<Trainings/>} />
               <Route path="trainings/add" element={<AddTraining/>}/>

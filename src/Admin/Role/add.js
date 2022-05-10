@@ -66,7 +66,7 @@ export default function AddRole(){
         bg={useColorModeValue('white', 'gray.700')}
         rounded={'xl'}>
         <Flex align="start">
-          <Heading size="md">Add New Role</Heading>
+          <Heading size="md">Add New Level</Heading>
         </Flex>
         <Box my={4} textAlign="left">
           <form>

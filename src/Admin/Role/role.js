@@ -24,11 +24,44 @@ export default function Role(){
     const [name,setName] = useState("");
     const [isAdmin] = useContext(AdminContext);
     const [role,setRole] = useState({});
-    const [salaries,setSalaries] = useState([]);
+    const navigate = useNavigate()
+
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      setIsLoading(true);
+      const {data:response} = await axios.post(`${SERVER_URL}/profession/${id}`,{
+        name,salary
+      },{
+        headers:{
+          "Authorization":`Bearer ${token}`
+      }
+      });
+      if(!response || typeof response.error == "string"){
+        setIsLoading(false);
+          toast({
+            title:response.error ? response.error :"network error",
+            status:"error",
+            isClosable:true
+          })
+          return ;
+        }
+        if(!response.success){
+          setIsLoading(false);
+          toast({
+            title:response.message ? response.message :"network error",
+            status:"error",
+            isClosable:true
+          })
+          return ;
+        }
+        if(response.success){
+          setIsLoading(false);
+          navigate("/admin/dashboard/roles")
+        }
+    }
 
 
     useEffect(()=>{
-        console.log("here at role")
         const fetchRole = async ()=>{
             setIsLoading(true);
             const {data:response} = await axios.get(`${SERVER_URL}/profession/${id}`,{
@@ -60,43 +93,10 @@ export default function Role(){
               }
               return;
         }
-    
-        const fetchSalaries = async ()=>{
-            setIsLoading(true);
-            const {data:response} = await axios.get(`${SERVER_URL}/salaries/all`,{
-                headers:{
-                    "Authorization":`Bearer ${token}`
-                }
-            });
-            if(!response || typeof response.error == "string"){
-              setIsLoading(false);
-                toast({
-                  title:response.error ? response.error :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return;
-              }
-              if(!response.success){
-                setIsLoading(false);
-                toast({
-                  title:response.message ? response.message :"network error",
-                  status:"error",
-                  isClosable:true
-                })
-                return;
-              }
-              if(response.success){
-                setIsLoading(false);
-                setSalaries(...response.data);
-              }
-              return;
-        }
  
         // checkIsLoggedIn(token);
         // checkIsAdmin(isAdmin);
         fetchRole();
-        fetchSalaries();
     },[token,id]);
 
 
@@ -109,26 +109,21 @@ export default function Role(){
         <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'2xl'}
         bg={'gray.700'}>
         <Flex align="start">
-          <Heading size="md">Edit Role Details</Heading>
+          <Heading size="md">Edit Level Details</Heading>
         </Flex>
         <Box my={4} textAlign="left">
-          <form>
+          <form onSubmit={handleSubmit}>
           < FormControl>
               <FormLabel>Name</FormLabel>
-              <Input type="text" placeholder="Role name" value={name} onChange={(e)=>setName(e.target.value)}/>
+              <Input type="text" placeholder="level name" value={role.name} onChange={(e)=>setName(e.target.value)}/>
             </FormControl>
             <FormControl>
             <FormLabel htmlFor='status'>Salary</FormLabel>
-                <Select id='country' placeholder='select role salary' value={salary} onChange={(e)=>setSalary(e.target.value)}>
-                    {
-                        salaries && salaries.map((s,index)=>{
-                            <option key={index} value={s.id}>{s.amount}</option>
-                        })
-                    }
-                </Select>
+            <FormLabel>Salary</FormLabel>
+            <Input type="number" placeholder="enter level salary" value={role.salary} onChange={(e)=>setSalary(e.target.value)}/>
             </FormControl>
             <HStack alignItems="end" spacing={5}>
-            <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>}>
+            <Button size="md" mt={4} type="submit"  colorScheme="blue" leftIcon={<MdSave/>}>
               Save
             </Button>
             <Button type="button" size="md" mt={4} colorScheme="red" leftIcon={<MdDelete/>} onClick={onOpen}>

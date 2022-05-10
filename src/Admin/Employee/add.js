@@ -135,11 +135,10 @@ export default function AddEmployee() {
                                     </Select>
                                 </FormControl>
                                 <FormControl>
-                                <FormLabel htmlFor='proffession'>Profession</FormLabel>
-                                <Select id='status' placeholder='select occupation' name="ProfessionId">
+                                <FormLabel htmlFor='proffession'>Level</FormLabel>
+                                <Select id='level' placeholder='select employee level' name="ProfessionId">
                                     {
                                         professions !== [] && professions.map((prof,idx)=>{
-                                            console.log(prof);
                                             return(
                                             <option value={prof.id} key={idx}>{prof.name}</option>
                                             );

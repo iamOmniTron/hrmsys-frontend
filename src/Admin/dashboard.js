@@ -43,7 +43,6 @@ const LinkItems = [
   { name: 'Training', icon: FaHandshake ,link:"trainings"},
   { name: 'Skills', icon: GiSkills ,link:"skills"},
   { name: 'Payroll', icon: MdPayments ,link:"payroll"},
-  { name: 'Attendance', icon: VscSignIn ,link:"attendance"}
 ];
 
 export default function Dashboard({children}) {

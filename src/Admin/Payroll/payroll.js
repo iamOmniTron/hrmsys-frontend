@@ -66,8 +66,11 @@ export default function Payroll(){
         <Table variant='simple'>
         <Thead>
         <Tr>
+            <Th>Id</Th>
+            <Th>Name</Th>
             <Th>Email</Th>
-            <Th>Profession</Th>
+            <Th>Level</Th>
+            <Th>Status</Th>
             <Th>Salary</Th>
             <Th>Paid</Th>
         </Tr>

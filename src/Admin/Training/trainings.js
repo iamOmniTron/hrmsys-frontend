@@ -79,7 +79,7 @@ export default function Trainings() {
                         <Table variant='simple'>
                             <Thead>
                                 <Tr>
-                                    <Th>Name</Th>
+                                    <Th>Skill</Th>
                                     <Th>Duration</Th>
                                     <Th></Th>
                                 </Tr>

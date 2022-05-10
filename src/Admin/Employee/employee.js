@@ -170,8 +170,8 @@ export default function Employee(){
                                     </Select>
                                 </FormControl>
                                 <FormControl>
-                                <FormLabel htmlFor='profession'>Profession</FormLabel>
-                                <Select id='status' placeholder='select occupation' name="ProfessionId">
+                                <FormLabel htmlFor='profession'>Level</FormLabel>
+                                <Select id='status' placeholder='select employee level' name="ProfessionId">
                                     {
                                         professions !== [] && professions.map((prof,idx)=>{
                                             console.log(prof);
@@ -220,11 +220,20 @@ export default function Employee(){
                                 <FormLabel>Password</FormLabel>
                                 <Input type="password" placeholder="*******" name="password"/>
                             </FormControl>
+                            <FormControl>
+                              <FormLabel>Employee Status</FormLabel>
+                              <Select id='status' placeholder='select employee status' name="status">
+                                        <option value={1}>employeed</option>
+                                        <option value={2}>training</option>
+                                        <option value={3}>on leave</option>
+                                        <option value={4}>retired</option>
+                            </Select>
+                            </FormControl>
                             </HStack>
             <HStack alignItems="end" spacing={5}>
             <Button size="md" mt={4} type="submit" 
             colorScheme="blue" leftIcon={<MdSave/>}>
-              Save
+              Save 
             </Button>
             <Button type="button" size="md" mt={4} colorScheme="red" leftIcon={<MdDelete/>} onClick={onOpen}>
               Discard

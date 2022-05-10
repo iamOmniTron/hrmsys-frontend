@@ -72,6 +72,7 @@ export default function Payroll(){
             <Th>Level</Th>
             <Th>Status</Th>
             <Th>Salary</Th>
+            <Th>Month</Th>
             <Th>Paid</Th>
         </Tr>
         </Thead>

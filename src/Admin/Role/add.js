@@ -72,11 +72,11 @@ export default function AddRole(){
           <form>
           < FormControl>
               <FormLabel>Name</FormLabel>
-              <Input type="text" placeholder="Role name" value={name} onChange={(e)=>setName(e.target.value)}/>
+              <Input type="text" placeholder="Role name" size="md" value={name} onChange={(e)=>setName(e.target.value)}/>
             </FormControl>
             <FormControl>
             <FormLabel htmlFor='status'>Salary</FormLabel>
-                <Input type="number" placeholder="salary amount" value={salary} onChange={(e)=>setSalary(e.target.value)}/>
+                <Input type="number" placeholder="salary amount" size="md" value={salary} onChange={(e)=>setSalary(e.target.value)}/>
             </FormControl>
             <HStack alignItems="end" spacing={5}>
             <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>} isLoading={isLoading} onClick={handleSubmit}>

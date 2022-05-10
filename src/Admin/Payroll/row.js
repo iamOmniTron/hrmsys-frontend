@@ -18,6 +18,21 @@ export default function Row({prop}){
         "4":"Retired"
     }
 
+    const MONTHS = {
+        "1":"January",
+        "2":"February",
+        "3":"March",
+        "4":"April",
+        "5":"May",
+        "6":"June",
+        "7":"July",
+        "8":"August",
+        "9":"September",
+        "10":"October",
+        "11":"November",
+        "12":"December"
+    }
+
     const handlePayment = async (e)=>{
         setIsLoading(true);
         const {data:response} = await axios.post(`${SERVER_URL}/pay/employee`,{userId:prop.id},{
@@ -65,6 +80,7 @@ export default function Row({prop}){
             <Td>{prop.profession.name}</Td>
             <Td>{STATUSES[prop.User.status.toString()]}</Td>
             <Td>N{new Intl.NumberFormat("en-US",{style:"currency"}).format(prop.profession.salary)}</Td>
+            <Td>{MONTHS[prop.month.toString()]}</Td>
             <Td>{prop.paid === true? "Paid" : "Not Paid"}</Td>
             <Td>  
             <Button leftIcon={<MdPayments/>} disabled={isPaid} colorScheme="facebook" isLoading={isLoading} onClick={handlePayment}>Pay</Button>

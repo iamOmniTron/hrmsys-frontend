@@ -4,10 +4,10 @@ import {
     ModalContent,
     ModalFooter,
     ModalBody,
-    ModalCloseButton, useDisclosure, useToast,useColorModeValue,InputGroup,InputLeftAddon
+    ModalCloseButton, useDisclosure, useToast, useColorModeValue, InputGroup, InputLeftAddon
 } from "@chakra-ui/react";
 import {MdDelete, MdSave} from "react-icons/md";
-import {useState, useEffect,useContext} from "react";
+import {useState, useEffect, useContext} from "react";
 import AuthContext from "../../contexts/auth";
 // import AdminContext from "../../contexts/admin";
 import axios from "axios";
@@ -19,7 +19,7 @@ export default function AddEmployee() {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [token] = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);
-    const [professions,setProfessions] = useState([]);
+    const [professions, setProfessions] = useState([]);
     const navigate = useNavigate();
     const toast = useToast();
 
@@ -56,11 +56,11 @@ export default function AddEmployee() {
         }
     }
 
-    useEffect(()=>{
-        const fetchProfessions = async()=>{
-            const {data:response} = await axios.get(`${SERVER_URL}/professions/all`,{
-                headers:{
-                    "Authorization":`Bearee ${token}`
+    useEffect(() => {
+        const fetchProfessions = async () => {
+            const {data: response} = await axios.get(`${SERVER_URL}/professions/all`, {
+                headers: {
+                    "Authorization": `Bearee ${token}`
                 }
             });
             if (!response || typeof response.error == "string") {
@@ -85,15 +85,15 @@ export default function AddEmployee() {
             }
         }
         fetchProfessions();
-    },[token]);
+    }, [token]);
 
     return (
         <>
             <PopUp isOpen={isOpen} onClose={onClose}/>
             <Flex direction="column" minHeight="100vh">
-                <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'2xl'}
-        bg={useColorModeValue('white', 'gray.700')}
-        rounded={'xl'}>
+                <Stack spacing={10} mx={'2em'} minW={'lg'} py={12} px={6} boxShadow={'x'}
+                       bg={useColorModeValue('white', 'gray.700')}
+                       rounded={'x'}>
                     <Flex align="start">
                         <Heading size="md">Add New Employee</Heading>
                     </Flex>
@@ -101,18 +101,18 @@ export default function AddEmployee() {
                         <form onSubmit={handleSubmit}>
                             <HStack direction={{base: 'column', sm: 'row'}}
                                     align={'start'} mt={6}>
-                            < FormControl >
-                                <FormLabel>Firstname</FormLabel>
-                                <Input type="text" placeholder="employee firstname" name="firstname"/>
-                            </FormControl>
-                            <FormControl>
-                                <FormLabel>Lastname</FormLabel>
-                                <Input type="text" placeholder="employee lastname" name="lastname"/>
-                            </FormControl>
+                                < FormControl>
+                                    <FormLabel>Firstname</FormLabel>
+                                    <Input type="text" placeholder="employee firstname" name="firstname"/>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Lastname</FormLabel>
+                                    <Input type="text" placeholder="employee lastname" name="lastname"/>
+                                </FormControl>
                             </HStack>
                             <HStack direction={{base: 'column', sm: 'row'}}
-                                    align={'start'}  mt={6}>
-                                        <FormControl>
+                                    align={'start'} mt={6}>
+                                <FormControl>
                                     <FormLabel>Middlename</FormLabel>
                                     <Input type="text" placeholder="middlename" name="middlename"/>
                                 </FormControl>
@@ -123,7 +123,7 @@ export default function AddEmployee() {
                             </HStack>
                             <HStack direction={{base: 'column', sm: 'row'}}
                                     align={'start'} mt={6}>
-                                <FormControl >
+                                <FormControl>
                                     <FormLabel>Date Of Birth</FormLabel>
                                     <Input type="date" size="md" placeholder="date of birth" name="dob"/>
                                 </FormControl>
@@ -135,59 +135,59 @@ export default function AddEmployee() {
                                     </Select>
                                 </FormControl>
                                 <FormControl>
-                                <FormLabel htmlFor='proffession'>Level</FormLabel>
-                                <Select id='level' placeholder='select employee level' name="ProfessionId">
-                                    {
-                                        professions !== [] && professions.map((prof,idx)=>{
-                                            return(
-                                            <option value={prof.id} key={idx}>{prof.name}</option>
-                                            );
-                                        })
-                                    }
-                                </Select>
+                                    <FormLabel htmlFor='profession'>Level</FormLabel>
+                                    <Select id='level' placeholder='select employee level' name="ProfessionId">
+                                        {
+                                            professions !== [] && professions.map((prof, idx) => {
+                                                return (
+                                                    <option value={prof.id} key={idx}>{prof.name}</option>
+                                                );
+                                            })
+                                        }
+                                    </Select>
                                 </FormControl>
                             </HStack>
                             <HStack mt={6}>
-                            <FormControl >
-                                <FormLabel>Email</FormLabel>
-                                <Input type="email" placeholder="employee@hrmsys.com" name="email"/>
-                            </FormControl>
-                            <FormControl >
-                                <FormLabel>Phone</FormLabel>
-                                <InputGroup>
-                                <InputLeftAddon children="+234"/>
-                                <Input type="tel" placeholder="enter employee phone number" name="phone"/>
-                                </InputGroup>
-                            </FormControl>
-                            <FormControl >
-                            <FormLabel htmlFor='status'>Gender</FormLabel>
-                            <Select id='gender' placeholder='select gender' name="gender">
+                                <FormControl>
+                                    <FormLabel>Email</FormLabel>
+                                    <Input type="email" placeholder="employee@hrmsys.com" name="email"/>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Phone</FormLabel>
+                                    <InputGroup>
+                                        <InputLeftAddon children="+234"/>
+                                        <Input type="tel" placeholder="enter employee phone number" name="phone"/>
+                                    </InputGroup>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel htmlFor='status'>Gender</FormLabel>
+                                    <Select id='gender' placeholder='select gender' name="gender">
                                         <option value="male">male</option>
                                         <option value="female">female</option>
-                            </Select>
-                            </FormControl>
+                                    </Select>
+                                </FormControl>
                             </HStack>
                             <HStack direction={{base: 'column', sm: 'row'}}
                                     align={'start'} mt={6}>
-                                <FormControl >
-                                <FormLabel>Date of Appointment</FormLabel>
-                                <Input type="date" placeholder="enter date of appointment" name="doa"/>
-                            </FormControl>
-                            <FormControl >
-                                <FormLabel>Date of Retirement</FormLabel>
-                                <Input type="date" placeholder="enter date of retirement" name="dor"/>
-                            </FormControl>
+                                <FormControl>
+                                    <FormLabel>Date of Appointment</FormLabel>
+                                    <Input type="date" placeholder="enter date of appointment" name="doa"/>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Date of Retirement</FormLabel>
+                                    <Input type="date" placeholder="enter date of retirement" name="dor"/>
+                                </FormControl>
                             </HStack>
                             <HStack direction={{base: 'column', sm: 'row'}}
                                     align={'start'} mt={6}>
-                            <FormControl>
-                                <FormLabel>Password</FormLabel>
-                                <Input type="password" placeholder="*******" name="password"/>
-                            </FormControl>
-                            <FormControl>
-                                <FormLabel>Image</FormLabel>
-                                <Input type="file" size="sm" placeholder="upload image" name="picture"/>
-                            </FormControl>
+                                <FormControl>
+                                    <FormLabel>Password</FormLabel>
+                                    <Input type="password" placeholder="*******" name="pass"/>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Image</FormLabel>
+                                    <Input type="file" size="sm" placeholder="upload image" name="picture"/>
+                                </FormControl>
                             </HStack>
                             <HStack alignItems="end" spacing={5}>
                                 <Button size="md" mt={4} type="submit" colorScheme="blue" leftIcon={<MdSave/>}

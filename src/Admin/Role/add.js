@@ -72,7 +72,7 @@ export default function AddRole(){
           <form>
           < FormControl>
               <FormLabel>Name</FormLabel>
-              <Input type="text" placeholder="Role name" size="md" value={name} onChange={(e)=>setName(e.target.value)}/>
+              <Input type="text" placeholder="Level name" size="md" value={name} onChange={(e)=>setName(e.target.value)}/>
             </FormControl>
             <FormControl>
             <FormLabel htmlFor='status'>Salary</FormLabel>

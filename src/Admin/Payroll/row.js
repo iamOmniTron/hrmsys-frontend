@@ -76,10 +76,10 @@ export default function Row({prop}){
          <Tr>
              <Td>{prop.id}</Td>
              <Td>{prop.User.firstname}</Td>
-            <Td>{prop.email}</Td>
-            <Td>{prop.profession.name}</Td>
-            <Td>{STATUSES[prop.User.status.toString()]}</Td>
-            <Td>N{new Intl.NumberFormat("en-US",{style:"currency"}).format(prop.profession.salary)}</Td>
+            <Td>{prop.User.email}</Td>
+            <Td>{prop.User?.Profession?.name}</Td>
+            <Td>{STATUSES[prop.User.status?.toString()]}</Td>
+            <Td>N{new Intl.NumberFormat("en-US",{style:"currency", currency: 'NGN'}).format(prop.User?.Profession?.salary)}</Td>
             <Td>{MONTHS[prop.month.toString()]}</Td>
             <Td>{prop.paid === true? "Paid" : "Not Paid"}</Td>
             <Td>  

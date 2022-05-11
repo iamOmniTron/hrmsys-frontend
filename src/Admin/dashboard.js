@@ -41,7 +41,6 @@ const LinkItems = [
   { name: 'Employees', icon: ImUsers,link:"employees" },
   { name:"Levels", icon: BsTools, link:"roles"},
   { name: 'Training', icon: FaHandshake ,link:"trainings"},
-  { name: 'Skills', icon: GiSkills ,link:"skills"},
   { name: 'Payroll', icon: MdPayments ,link:"payroll"},
 ];
 

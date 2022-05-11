@@ -22,7 +22,7 @@ export default function Payroll(){
 
     useEffect(()=>{
         const fetchSalaries = async ()=>{
-            const {data:response}= await axios.get(`${SERVER_URL}/employees/salaries`,{
+            const {data:response}= await axios.get(`${SERVER_URL}/employees/salary`,{
                 headers:{
                     "Authorization": `Bearer ${token}`
                 }
@@ -56,9 +56,9 @@ export default function Payroll(){
         <Loader/> :
         <>
         <Flex direction="column"  minHeight="100vh">
-        <Flex direction="row">
+        <Flex direction="row" borderBottom={'1px'} pb={'8px'}>
             <Box p="2px">
-                <Heading size="md">Employees Payroll</Heading>
+                <Heading size="md">Payroll</Heading>
             </Box>
             <Spacer/>
         </Flex>

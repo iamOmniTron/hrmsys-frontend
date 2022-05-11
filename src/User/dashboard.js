@@ -32,7 +32,7 @@ import {useEffect,useContext} from "react";
 
 const LinkItems = [
   { name : "Dashboard", icon:AiOutlineDashboard,link:"profile"},
-  { name:"Training Programs", icon: BsTools, link:"programs"},
+  { name:"Training Programs", icon: BsTools, link:"program"},
 ];
 
 export default function UserDashboard({children}){

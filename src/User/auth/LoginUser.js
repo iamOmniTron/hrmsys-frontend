@@ -136,7 +136,8 @@ export default function LoginUser() {
 
                 const bestMatch = faceMatcher.findBestMatch(detections.descriptor);
                 console.log(bestMatch)
-                if (bestMatch && bestMatch.label === name) {
+                // include distance check
+                if (bestMatch && bestMatch.label === name && bestMatch.distance < .4) {
                     setStep(3);
                 } else{
                     toast({
@@ -202,7 +203,7 @@ export default function LoginUser() {
         }
         setIsLoading(false);
         setToken(response.data);
-        navigate("/user/dashboard");
+        navigate("/user/dashboard/profile");
     }
 
 

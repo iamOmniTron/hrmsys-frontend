@@ -85,7 +85,7 @@ export default function Employees() {
                                     <Th>Firstname</Th>
                                     <Th>Lastname</Th>
                                     <Th>Date Of Birth</Th>
-                                    <Th>Profession</Th>
+                                    <Th>Level</Th>
                                     <Th>Status</Th>
                                     <Th>Actions</Th>
                                 </Tr>

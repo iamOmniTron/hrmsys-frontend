@@ -80,7 +80,7 @@ export default function Roles(){
        <Th>Id</Th>
        <Th>Name</Th>
        <Th>Salary</Th>
-       <Th></Th>
+       <Th>Actions</Th>
      </Tr>
    </Thead>
    <Tbody>

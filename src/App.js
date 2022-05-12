@@ -15,6 +15,7 @@ import Payroll from "./Admin/Payroll/payroll";
 import AddProgram from "./User/program/add";
 import UserDashboard from "./User/dashboard";
 import Profile from "./User/profile";
+import Program from "./User/program/program";
 // import Cam from "./User/auth/test";
 
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
@@ -35,6 +36,7 @@ function App() {
             <Route path="/login" element={<LoginUser/>}/>
             <Route path="/user/dashboard" element={<UserDashboard/>}>
               <Route path="profile" element={<Profile/>}/>
+              <Route path="program" element={<Program/>}/>
               <Route path="program/add" element={<AddProgram/>}/>
             </Route>
             <Route path="/admin/login" element={<LoginAdmin/>}/>

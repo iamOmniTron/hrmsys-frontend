@@ -9,7 +9,6 @@ import {
 import {MdDelete, MdSave} from "react-icons/md";
 import {useState, useEffect, useContext} from "react";
 import AuthContext from "../../contexts/auth";
-// import AdminContext from "../../contexts/admin";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -177,6 +176,10 @@ export default function AddEmployee() {
                                     <FormLabel>Date of Retirement</FormLabel>
                                     <Input type="date" placeholder="enter date of retirement" name="dor"/>
                                 </FormControl>
+                                <FormControl>
+                                  <FormLabel>Years Till Promotion</FormLabel>
+                                  <Input type="number" placeholder="enter years" name="yearsTillPromotion"/>
+                                </FormControl>
                             </HStack>
                             <HStack direction={{base: 'column', sm: 'row'}}
                                     align={'start'} mt={6}>
@@ -228,4 +231,3 @@ function PopUp({isOpen, onClose}) {
         </>
     )
 }
-

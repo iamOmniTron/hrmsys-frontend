@@ -223,6 +223,10 @@ export default function Employee() {
                                         <FormLabel>Date of Retirement</FormLabel>
                                         <Input type="date" placeholder="enter date of retirement" name="dor" value={employee.dor}/>
                                     </FormControl>
+                                    <FormControl>
+                                      <FormLabel>Years Till Promotion</FormLabel>
+                                      <Input type="number" placeholder="enter years" value={employee.yearsTillPromotion} name="yearsTillPromotion"/>
+                                    </FormControl>
                                 </HStack>
                                 <HStack direction={{base: 'column', sm: 'row'}}
                                         align={'start'} mt={6}>
@@ -315,4 +319,3 @@ function PopUp({isOpen, onClose, id, token, toast}) {
         </>
     )
 }
-

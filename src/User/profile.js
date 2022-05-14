@@ -131,12 +131,16 @@ export default function Profile() {
                                         </VStack>
                                         <VStack align={'start'}>
                                             <Text>Salary</Text>
-                                            <Text fontWeight={'semibold'}>{user.Profession?.name}</Text>
+                                            <Text fontWeight={'semibold'}>N{user.Profession?.salary}</Text>
                                         </VStack>
                                         <VStack align={'start'}>
                                             <Text>Status</Text>
                                             <Text fontWeight={'semibold'}>{STATUSES[user.status?.toString()]}</Text>
                                         </VStack>
+                                    </HStack>
+                                    <HStack direction={{base: 'column', sm: 'row'}}
+                                            align={'center'} mt={6} spacing={20}>
+                                      <Text fontWeight={'semibold'}>{user.lastPromotionDate}</Text>
                                     </HStack>
                                 </Stack>
                             </Box>

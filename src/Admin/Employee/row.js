@@ -24,7 +24,7 @@ export default function Row({prop}){
     const handleDelete = async(e)=>{
         try{
             setIsLoading(true);
-            const {data:response} = await axios.delete(`${SERVER_URL}/delete/employee/${prop.id}`,{
+            const {data:response} = await axios.post(`${SERVER_URL}/delete/employee/${prop.id}`,{
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }

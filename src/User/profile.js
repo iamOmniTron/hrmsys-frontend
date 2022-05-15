@@ -139,8 +139,31 @@ export default function Profile() {
                                         </VStack>
                                     </HStack>
                                     <HStack direction={{base: 'column', sm: 'row'}}
-                                            align={'center'} mt={6} spacing={20}>
+                                            align={'start'} mt={6} spacing={20}>
+                                            <VStack align={'start'} width={'30%'}>
+                                          <Text>Last Promoted On </Text>
                                       <Text fontWeight={'semibold'}>{user.lastPromotionDate}</Text>
+                                      </VStack>
+                                      <VStack align={'start'} width={'30%'}>
+                                      <Text>Country</Text>
+                                      <Text fontWeight={'semibold'}>{user.country}</Text>
+                                      </VStack>
+                                    </HStack>
+                                    <HStack direction={{base: 'column', sm: 'row'}>
+                                      <VStack align={'start'} width={'30%'}>
+                                        <Text> State</Text>
+                                        <Text fontWeight={'semibold'}>{user.state}</Text>
+                                      <VStack>
+                                      <VStack align={'start'} width={'30%'}>
+                                        <Text> Home Town</Text>
+                                        <Text fontWeight={'semibold'}>{user.hometown}</Text>
+                                      <VStack>
+                                    </HStack>
+                                    <HStack direction={{base: 'column', sm: 'row'}>
+                                      <VStack align={'center'} width={'30%'}>
+                                        <Text>Address</Text>
+                                        <Text fontWeight={'semibold'}>{user.contactAddress}</Text>
+                                      <VStack>
                                     </HStack>
                                 </Stack>
                             </Box>

@@ -168,6 +168,27 @@ export default function AddEmployee() {
                             </HStack>
                             <HStack direction={{base: 'column', sm: 'row'}}
                                     align={'start'} mt={6}>
+                              <FormControl>
+                                <FormLabel>Country</FormLabel>
+                                <Input type="text" placeholder='enter country' name='country'/>
+                              </FormControl>
+                              <FormControl>
+                                <FormLabel>State</FormLabel>
+                                <Input type="text" placeholder='enter country' name='state'/>
+                              </FormControl>
+                              <FormControl>
+                                <FormLabel>Home Town</FormLabel>
+                                <Input type="text" placeholder='enter hometown' name='hometown'/>
+                              </FormControl>
+                            </HStack>
+                            <HStack>
+                            <FormControl>
+                              <FormLabel>Contact Address<FormLabel>
+                              <Input type="text" placeholder="enter contact address" name="contactAddress"/>
+                            </FormControl>
+                            </HStack>
+                            <HStack direction={{base: 'column', sm: 'row'}}
+                                    align={'start'} mt={6}>
                                 <FormControl>
                                     <FormLabel>Date of Appointment</FormLabel>
                                     <Input type="date" placeholder="enter date of appointment" name="doa"/>
